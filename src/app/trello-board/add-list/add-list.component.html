@@ -1,0 +1,49 @@
+<div class="modal-header">
+  <h4 class="modal-title">Add List</h4>
+  <button type="button" class="close m-0 p-0" aria-label="Close" (click)="activeModal.dismiss()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div class="modal-body p-3" #listcontent>
+  <div class="form-group">
+    <label class="d-block" for="list-title">List Title</label>
+    <input placeholder="Title for List" class="w-100" type="text" [(ngModel)]="listTitle" name="title" id="list-title"
+      required maxlength="30">
+  </div>
+  <div class="card-content position-relative">
+    <h2>Cards</h2>
+    <div class="list-tasks" *ngIf="listCards.length > 0;else nocards">
+      <div *ngFor="let item of listCards;let i = index">
+        <div class="form-group">
+          <label class="d-block" [for]="'card-title' + i">Card Title</label>
+          <input placeholder="Title for Card" class="w-100" #title type="text" [(ngModel)]="item.subTitle" name="title"
+            [id]="'card-title' + i" required maxlength="30">
+        </div>
+
+        <div class="form-group">
+          <label class="d-block" [for]="'card-desc' + i">Description</label>
+          <textarea placeholder="Add Description for the card" class="w-100" #desc [(ngModel)]="item.desc" name="desc"
+            [id]="'card-desc' + i" required maxlength="250"></textarea>
+        </div>
+        <div class="d-flex justify-content-end">
+          <button type="button" class="btn btn-danger" (click)="removeCardsFromList(i)">Remove</button>
+        </div>
+      </div>
+    </div>
+    <ng-template #nocards>
+      <div class="text-center position-absolute div-placement-center">No Cards. <span (click)="addCardsToList()"
+          class="pointer click-here-span">Click Here.</span> or Click on Add New Card
+      </div>
+    </ng-template>
+  </div>
+</div>
+<div class="d-flex justify-content-end py-2 px-3">
+  <button type="button" class="btn btn-primary" (click)="addCardsToList(listcontent)">Add New Card</button>
+</div>
+<div class="modal-footer">
+  <div>
+    <button type="button" [disabled]="!listTitle || checkCardList()" class="btn btn-success" (click)="addList()">ADD
+      LIST</button>
+  </div>
+</div>

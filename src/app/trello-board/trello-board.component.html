@@ -1,0 +1,37 @@
+<div class="p-3 trello-wrapper">
+  <div class="d-flex justify-content-end">
+    <button (click)="addList()" class="pointer btn btn-primary">ADD LIST</button>
+  </div>
+  <ng-container *ngIf="trelloList.length > 0; else noListTemplate">
+    <div class="trello-board-section d-flex pt-3">
+      <div #trelloLists (drop)="drop($event,item)" (dragover)="allowDrop($event)"
+        class="trello-list mr-3 position-relative" *ngFor="let item of trelloList;trackBy:trackByListId;let i = index;">
+        <h4 class="d-flex justify-content-between list-title p-2">
+          <span>{{item.title}}</span>
+          <span class="pointer" (click)="removeListItem(item.uid)">&#x2715;</span>
+        </h4>
+        <div class="px-2 task-card-section" *ngIf="item.list.length > 0; else elseTemplate">
+          <div #trellocards draggable="true" (dragstart)="drag($event,item,task)" class="task-list mb-2 p-2"
+            *ngFor="let task of item.list;trackBy:trackByTaskId;let x = index;">
+            <h5 class="d-flex justify-content-between">
+              <span>{{task.subTitle}}</span>
+              <span class="pointer" (click)="removeTaskItem(item.uid,task.id)">&#10006;</span>
+            </h5>
+            <p class="m-0">{{task.desc}}</p>
+          </div>
+        </div>
+        <ng-template #elseTemplate>
+          <div class="position-absolute div-placement-center">
+            No Cards.
+          </div>
+        </ng-template>
+        <button (click)="addCard(item.list)" class="position-absolute rounded-circle add-btn bg-white">+</button>
+      </div>
+    </div>
+  </ng-container>
+  <ng-template #noListTemplate>
+    <div class="no-list-placeholder position-absolute div-placement-center">
+      No List. <span class="pointer" (click)="addList()">Click Here</span> to Add List.
+    </div>
+  </ng-template>
+</div>

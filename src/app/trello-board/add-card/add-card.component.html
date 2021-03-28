@@ -1,0 +1,30 @@
+<div class="modal-header">
+  <h4 class="modal-title">Add Card</h4>
+  <button type="button" class="close m-0 p-0" aria-label="Close" (click)="activeModal.dismiss()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div class="modal-body p-0">
+  <form class="p-3" #cardForm="ngForm">
+    <div class="form-group">
+      <label class="d-block" for="card-title">Card Title</label>
+      <input placeholder="Title for Card" class="w-100" #title type="text" [(ngModel)]="cardTitle" name="title" id="card-title" required
+        maxlength="30">
+    </div>
+
+    <div class="form-group">
+      <label class="d-block" for="card-desc">Description</label>
+      <textarea placeholder="Add Description for the card" class="w-100" #desc [(ngModel)]="cardDescp" name="desc" id="card-desc" required
+        maxlength="250"></textarea>
+    </div>
+
+  </form>
+</div>
+
+<div class="modal-footer">
+  <div>
+    <button type="button" [disabled]="!cardDescp && !cardDescp" class="btn btn-primary"
+      (click)="addCard(cardForm)">ADD</button>
+  </div>
+</div>
